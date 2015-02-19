@@ -1,6 +1,8 @@
-from unittest import TestCase
+import unittest
+
+from dynamic_db_router import DynamicDbRouter, in_database
 
 
-class SampleTest(TestCase):
-    def test_1_equals_1(self):
-        self.assertEquals(1, 1)
+class TestInDataBaseContextManager(unittest.TestCase):
+    def test_string_identifier(self):
+        pass
