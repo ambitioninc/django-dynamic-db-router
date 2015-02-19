@@ -93,3 +93,16 @@ class TestDynamicDatabaseConnection(TestCase):
             G(TestModel, name='Sue')
         ending_connections = len(connections.databases)
         self.assertEqual(starting_connections, ending_connections)
+
+
+class TestInDatabaseDecorator(TestCase):
+    def test_decorator_matches_context_manager(self):
+        @in_database('test')
+        def test_db_record_count():
+            return TestModel.objects.count()
+
+        with in_database('test'):
+            G(TestModel, name='Michael Bluth')
+            context_count = TestModel.objects.count()
+        decorator_count = test_db_record_count()
+        self.assertEqual(context_count, decorator_count)
