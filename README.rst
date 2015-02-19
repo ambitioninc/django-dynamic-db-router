@@ -36,7 +36,8 @@ such as:
 
 - Using ``in_database`` as a function decorator.
 - Read and write protection controls.
-- Creating temporary database configurations dynamically.
+- Load database configurations dynamically for the lifetime of the
+  context manager.
 
 For more information, and complete API documentation, see the docs,
 linked below.

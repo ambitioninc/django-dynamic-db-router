@@ -1,4 +1,4 @@
-Django Dynamic Db Router
+Django Dynamic DB Router
 ========================
 
 Working with multiple databases within django is supported, but the
@@ -25,7 +25,8 @@ such as:
 
 - Using ``in_database`` as a function decorator.
 - Read and write protection controls.
-- Creating temporary database configurations dynamically.
+- Load database configurations dynamically for the lifetime of the
+  context manager.
 
 For more information, and complete API documentation, see the
 quickstart guide or code documentation, linked below.
@@ -38,6 +39,7 @@ Table of Contents
    :maxdepth: 2
 
    installation
+   quickstart
    ref/dynamic_db_router
    contributing
    release_notes
