@@ -6,8 +6,5 @@ Code documentation
 dynamic_db_router
 ------------------
 
-.. automodule:: dynamic_db_router
-.. autoclass:: dynamic_db_router.dynamic_db_router
-    :members:
+.. autoclass:: dynamic_db_router.in_database
 
-    .. automethod:: __init__

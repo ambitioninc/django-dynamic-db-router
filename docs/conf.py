@@ -5,6 +5,8 @@
 import os
 import re
 
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 def get_version():
     """
@@ -37,7 +39,7 @@ templates_path = ['_templates']
 source_suffix = '.rst'
 
 # The master toctree document.
-master_doc = 'toc'
+master_doc = 'index'
 
 # General information about the project.
 project = u'dynamic_db_router'

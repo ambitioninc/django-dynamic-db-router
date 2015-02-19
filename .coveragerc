@@ -1,3 +1,11 @@
+[run]
+branch = True
+omit =
+    dynamic_db_router/migrations/*
+    dynamic_db_router/tests/*
+    dynamic_db_router/version.py
+source = dynamic_db_router
+
 [report]
 exclude_lines =
     # Have to re-enable the standard pragma
@@ -5,3 +13,5 @@ exclude_lines =
 
     # Don't complain if tests don't hit defensive assertion code:
     raise NotImplementedError
+fail_under = 100
+show_missing = 1
