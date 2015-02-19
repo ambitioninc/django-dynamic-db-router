@@ -36,14 +36,17 @@ setup(
         'Operating System :: OS Independent',
     ],
     license='MIT',
-    install_requires=[],
-    include_package_data=True,
-    test_suite='nose.collector',
+    install_requires=[
+        'django>=1.6',
+    ],
     tests_require=[
+        'django-nose',
         'coverage>=3.7.1',
         'flake8>=2.2.0',
         'mock>=1.0.1',
         'nose>=1.3.0',
     ],
+    include_package_data=True,
+    test_suite='run_tests.run_tests',
     zip_safe=False,
 )

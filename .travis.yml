@@ -18,8 +18,7 @@ before_script:
   - psql -c 'CREATE DATABASE dynamic_db_router_two;' -U postgres
 script:
   - flake8 .
-  - coverage run setup.py test
-  - coverage report
+  - python setup.py test
   - python setup.py install
   - cd docs && make html
 after_success:
