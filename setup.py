@@ -24,7 +24,7 @@ def get_requirements(path):
 setup(
     name='django-dynamic-db-router',
     version=get_version(),
-    description='',
+    description='Simply route complex django queries to multiple databases.',
     long_description=open('README.rst').read(),
     url='https://github.com/ambitioninc/django-dynamic-db-router',
     author='Erik Swanson',
