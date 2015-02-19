@@ -44,6 +44,7 @@ class in_database(object):
     Usage as a context manager:
 
     .. code-block:: python
+
         from my_django_app.utils import tricky_query
 
         with in_database('Database_A'):
@@ -52,6 +53,7 @@ class in_database(object):
     Usage as a decorator:
 
     .. code-block:: python
+
         from my_django_app.models import Account
 
         @in_database('Database_B')
