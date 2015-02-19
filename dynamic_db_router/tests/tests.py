@@ -106,3 +106,30 @@ class TestInDatabaseDecorator(TestCase):
             context_count = TestModel.objects.count()
         decorator_count = test_db_record_count()
         self.assertEqual(context_count, decorator_count)
+
+
+class TestDynamicDbRouterDefaults(TestCase):
+    def test_db_for_read(self):
+        router = DynamicDbRouter()
+        db_for_read = router.db_for_read(None)
+        self.assertIn(db_for_read, ['default', None])
+
+    def test_db_for_wrte(self):
+        router = DynamicDbRouter()
+        db_for_write = router.db_for_write(None)
+        self.assertIn(db_for_write, ['default', None])
+
+    def test_allow_relation(self):
+        router = DynamicDbRouter()
+        allow_relation = router.allow_relation(None, None)
+        self.assertEqual(allow_relation, True)
+
+    def test_allow_syncdb(self):
+        router = DynamicDbRouter()
+        allow_syncdb = router.allow_syncdb(None, None)
+        self.assertEqual(allow_syncdb, None)
+
+    def test_allow_migrate(self):
+        router = DynamicDbRouter()
+        allow_migrate = router.allow_migrate(None, None)
+        self.assertEqual(allow_migrate, None)
