@@ -40,8 +40,9 @@ setup(
         'django>=1.6',
     ],
     tests_require=[
-        'django-nose',
         'coverage>=3.7.1',
+        'django-nose',
+        'django-dynamic-fixture',
         'flake8>=2.2.0',
         'mock>=1.0.1',
         'nose>=1.3.0',
