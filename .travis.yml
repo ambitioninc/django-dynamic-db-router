@@ -21,5 +21,6 @@ script:
   - python setup.py test
   - python setup.py install
   - cd docs && make html
+  - pip freeze
 after_success:
   coveralls
