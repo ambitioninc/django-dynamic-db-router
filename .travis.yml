@@ -11,7 +11,7 @@ env:
     - DJANGO=1.6.5
     - DJANGO=1.7.4
 install:
-  - pip install psycopg2 flake8 nose>=1.3.0 coverage coveralls Django==$DJANGO
+  - pip install psycopg2 flake8 nose>=1.3.0 django-nose>=1.3 coverage coveralls Django==$DJANGO
   - pip install -r requirements/docs.txt
 before_script:
   - psql -c 'CREATE DATABASE dynamic_db_router_one;' -U postgres
