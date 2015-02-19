@@ -16,6 +16,9 @@ def get_version():
     else:
         raise RuntimeError('Unable to find version string in {0}.'.format(VERSION_FILE))
 
+def get_requirements(path):
+    with open(path, 'r') as requirements_file:
+        return requirements_file.read().split('\n')
 
 setup(
     name='django-dynamic-db-router',
@@ -36,17 +39,8 @@ setup(
         'Operating System :: OS Independent',
     ],
     license='MIT',
-    install_requires=[
-        'django>=1.6',
-    ],
-    tests_require=[
-        'coverage>=3.7.1',
-        'django-nose>=1.3',
-        'django-dynamic-fixture>=1.8.1',
-        'flake8>=2.2.0',
-        'mock>=1.0.1',
-        'nose>=1.3.0',
-    ],
+    install_requires=get_requirements('requirements/setup.txt'),
+    tests_require=get_requirements('requirements/test.txt'),
     include_package_data=True,
     test_suite='run_tests.run_tests',
     zip_safe=False,
