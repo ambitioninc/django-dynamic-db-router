@@ -16,6 +16,7 @@ def get_version():
     else:
         raise RuntimeError('Unable to find version string in {0}.'.format(VERSION_FILE))
 
+
 def get_requirements(path):
     with open(path, 'r') as requirements_file:
         return requirements_file.read().split('\n')
