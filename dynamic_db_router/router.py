@@ -31,15 +31,26 @@ class DynamicDbRouter(object):
 class in_database(object):
     """A decorator and context manager to do queries on a given database.
 
-    In order to route queries to a given database, there must be an
-    entry for that database in
-    `django.db.connections.databases`. These can either be defined in
-    `settings.DATABASES` or added to `django.db.connections.databases`
-    dynamically.
+    :type database: str or dict
+    :param database: The database to run queries on. A string
+        will route through the matching database in
+        ``django.conf.settings.DATABASES``. A dictionary will set up a
+        connection with the given configuration and route queries to it.
+
+    :type read: bool, optional
+    :param read: Controls whether database reads will route through
+        the provided database. If ``False``, reads will route through
+        the ``'default'`` database. Defaults to ``True``.
+
+    :type write: bool, optional
+    :param write: Controls whether database writes will route to
+        the provided database. If ``False``, writes will route to
+        the ``'default'`` database. Defaults to ``False``.
 
     When used as eithe a decorator or a context manager, `in_database`
     requires a single argument, which is the name of the database to
-    route queries to.
+    route queries to, or a configuration dictionary for a database to
+    route to.
 
     Usage as a context manager:
 
@@ -60,6 +71,14 @@ class in_database(object):
         def lowest_id_account():
             Account.objects.order_by('-id')[0]
 
+    Used with a configuration dictionary:
+
+    .. code-block:: python
+
+        db_config = {'ENGINE': 'django.db.backends.sqlite3',
+                     'NAME': 'path/to/mydatabase.db'}
+        with in_database(db_config):
+            # Run queries
     """
     def __init__(self, database, read=True, write=False):
         self.read = read
