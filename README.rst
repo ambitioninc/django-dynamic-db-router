@@ -8,19 +8,43 @@
     :target: https://pypi.python.org/pypi/django-dynamic-db-router/
     :alt: Latest PyPI version
 
-.. image:: https://pypip.in/d/django-dynamic-db-router/badge.png
-    :target: https://pypi.python.org/pypi/django-dynamic-db-router/
-    :alt: Number of PyPI downloads
 
-django-dynamic-db-router
-===============
+Django Dynamic DB Router
+========================
 
+Working with multiple databases within django is supported, but the
+syntax requires peppering ``.using('my_database')`` throughout all
+queries that need to be routed to different databases. This is
+especially painful when trying to use libraries that were written
+without multiple database support in mind. With this library, running
+complex queries across different databases is as simple as:
 
-I have failed to provide a good README.rst in my project, and you should shun
-me if I do any pull requests
+.. code-block:: python
+
+    from dynamic_db_router import in_database
+
+    with in_database('non-default-db'):
+        result = run_complex_query()
+
+To set up you django project to be able to use this router, simply
+``pip install django-dynamic-db-router`` and add
+``DATABASE_ROUTERS=['dynamic_db_router.DynamicDbRouter']`` to your
+Django settings.
+
+Django Dynamic DB Router includes a number of additional features,
+such as:
+
+- Using ``in_database`` as a function decorator.
+- Read and write protection controls.
+- Creating temporary database configurations dynamically.
+
+For more information, and complete API documentation, see the docs,
+linked below.
+
 
 Installation
 ------------
+
 To install the latest release, type::
 
     pip install django-dynamic-db-router
