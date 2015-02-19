@@ -24,6 +24,9 @@ class DynamicDbRouter(object):
     def allow_syncdb(self, db, model):
         return None
 
+    def allow_migrate(self, db, model):
+        return self.allow_syncdb(db, model)
+
 
 class in_database(object):
     """A decorator and context manager to do queries on a given database.
@@ -59,11 +62,13 @@ class in_database(object):
     def __init__(self, database, read=True, write=False):
         self.read = read
         self.write = write
+        self.created_db_config = False
         if isinstance(database, str):
             self.database = database
         elif isinstance(database, dict):
             # Note: this invalidates the docs above. Update them
             # eventually.
+            self.created_db_config = True
             self.unique_db_id = str(uuid4())
             connections.databases[self.unique_db_id] = database
             self.database = self.unique_db_id
@@ -77,12 +82,14 @@ class in_database(object):
             setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', self.database)
         if self.write:
             setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', self.database)
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', None)
         setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', None)
-        self.connections[self.unique_db_id].close()
-        del connections.databases[self.unique_db_id]
+        if self.created_db_config:
+            connections[self.unique_db_id].close()
+            del connections.databases[self.unique_db_id]
 
     def __call__(self, querying_func):
         @wraps(querying_func)

@@ -40,10 +40,6 @@ def configure_settings():
             },
             DATABASE_ROUTERS=['dynamic_db_router.DynamicDbRouter'],
             INSTALLED_APPS=(
-                'django.contrib.auth',
-                'django.contrib.contenttypes',
-                'django.contrib.sessions',
-                'django.contrib.admin',
                 'dynamic_db_router',
                 'dynamic_db_router.tests',
             ),
