@@ -10,6 +10,8 @@ from .models import TestModel
 
 
 class TestInDataBaseContextManager(TestCase):
+    multi_db = True
+
     def test_string_identifier(self):
         G(TestModel, name='Arnold')
         with in_database('default'):
@@ -40,6 +42,14 @@ class TestInDataBaseContextManager(TestCase):
         default_count = TestModel.objects.count()
         self.assertEqual(test_count, 0)
         self.assertEqual(default_count, 0)
+
+    def test_recursive_context_manager(self):
+        with in_database('test', write=True):
+            G(TestModel, name='Arnold')
+            with in_database('default', write=True):
+                pass
+            test_count = TestModel.objects.count()
+        self.assertEqual(test_count, 1)
 
     def test_bad_input_value(self):
         with self.assertRaises(ValueError):
