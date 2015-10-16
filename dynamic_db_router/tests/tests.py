@@ -43,7 +43,6 @@ class TestInDataBaseContextManager(TestCase):
         self.assertEqual(test_count, 0)
         self.assertEqual(default_count, 0)
 
-
     def test_recursive_context_manager(self):
         with in_database('test', write=True):
             G(TestModel, name='Arnold')

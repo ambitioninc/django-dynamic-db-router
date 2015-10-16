@@ -15,7 +15,6 @@ class DynamicDbRouter(object):
     def db_for_read(self, model, **hints):
         return getattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', ['default'])[-1]
 
-
     def db_for_write(self, model, **hints):
         return getattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', ['default'])[-1]
 
