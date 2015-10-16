@@ -13,10 +13,11 @@ class DynamicDbRouter(object):
     """
 
     def db_for_read(self, model, **hints):
-        return getattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', 'default')
+        return getattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', ['default'])[-1]
+
 
     def db_for_write(self, model, **hints):
-        return getattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', 'default')
+        return getattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', ['default'])[-1]
 
     def allow_relation(self, obj1, obj2, **hints):
         return True
@@ -99,15 +100,21 @@ class in_database(object):
             raise ValueError(msg)
 
     def __enter__(self):
-        if self.read:
-            setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', self.database)
-        if self.write:
-            setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', self.database)
+        if not hasattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE'):
+            THREAD_LOCAL.DB_FOR_READ_OVERRIDE = ['default']
+        if not hasattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE'):
+            THREAD_LOCAL.DB_FOR_WRITE_OVERRIDE = ['default']
+        read_db = (self.database if self.read
+                   else THREAD_LOCAL.DB_FOR_READ_OVERRIDE[-1])
+        write_db = (self.database if self.write
+                    else THREAD_LOCAL.DB_FOR_WRITE_OVERRIDE[-1])
+        THREAD_LOCAL.DB_FOR_READ_OVERRIDE.append(read_db)
+        THREAD_LOCAL.DB_FOR_WRITE_OVERRIDE.append(write_db)
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', None)
-        setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', None)
+        THREAD_LOCAL.DB_FOR_READ_OVERRIDE.pop()
+        THREAD_LOCAL.DB_FOR_WRITE_OVERRIDE.pop()
         if self.created_db_config:
             connections[self.unique_db_id].close()
             del connections.databases[self.unique_db_id]
