@@ -80,6 +80,7 @@ class in_database(object):
         with in_database(db_config):
             # Run queries
     """
+
     def __init__(self, database, read=True, write=False):
         self.read = read
         self.write = write
@@ -99,6 +100,8 @@ class in_database(object):
             raise ValueError(msg)
 
     def __enter__(self):
+        self.previous_read_db = getattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', 'default')
+        self.previous_write_db = getattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', 'default')
         if self.read:
             setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', self.database)
         if self.write:
@@ -106,8 +109,9 @@ class in_database(object):
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', None)
-        setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', None)
+        setattr(THREAD_LOCAL, 'DB_FOR_READ_OVERRIDE', self.previous_read_db)
+        setattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', self.previous_write_db)
+
         if self.created_db_config:
             connections[self.unique_db_id].close()
             del connections.databases[self.unique_db_id]
@@ -119,3 +123,5 @@ class in_database(object):
             with self:
                 return querying_func(*args, **kwargs)
         return inner
+
+    
