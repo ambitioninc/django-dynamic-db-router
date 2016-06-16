@@ -123,5 +123,3 @@ class in_database(object):
             with self:
                 return querying_func(*args, **kwargs)
         return inner
-
-    
