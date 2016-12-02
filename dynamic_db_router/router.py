@@ -18,14 +18,14 @@ class DynamicDbRouter(object):
     def db_for_write(self, model, **hints):
         return getattr(THREAD_LOCAL, 'DB_FOR_WRITE_OVERRIDE', ['default'])[-1]
 
-    def allow_relation(self, obj1, obj2, **hints):
+    def allow_relation(self, *args, **kwargs):
         return True
 
-    def allow_syncdb(self, db, model):
+    def allow_syncdb(self, *args, **kwargs):
         return None
 
-    def allow_migrate(self, db, model):
-        return self.allow_syncdb(db, model)
+    def allow_migrate(self, *args, **kwargs):
+        return None
 
 
 class in_database(object):
