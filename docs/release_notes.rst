@@ -5,6 +5,7 @@ v0.2.0
 ------
 
 * Add python 3.5 support
+* Remove python 3.3 support
 * Add django 1.10 support
 * Add support for nested context managers, thank you dyeray and Svan70
 
