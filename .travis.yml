@@ -2,16 +2,17 @@ sudo: false
 language: python
 python:
   - '2.7'
-  - '3.3'
   - '3.4'
+  - '3.5'
 env:
   global:
     - DB=postgres
   matrix:
-    - DJANGO=1.6.5
-    - DJANGO=1.7.4
+    - DJANGO=">=1.8,<1.9"
+    - DJANGO=">=1.9,<1.10"
+    - DJANGO=">=1.10,<1.11"
 install:
-  - pip install psycopg2 coveralls Django==$DJANGO
+  - pip install psycopg2 coveralls Django$DJANGO
   - pip install -r requirements/setup.txt
   - pip install -r requirements/test.txt
   - pip install -r requirements/docs.txt

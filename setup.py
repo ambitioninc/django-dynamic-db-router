@@ -21,6 +21,7 @@ def get_requirements(path):
     with open(path, 'r') as requirements_file:
         return requirements_file.read().split('\n')
 
+
 setup(
     name='django-dynamic-db-router',
     version=get_version(),
@@ -33,8 +34,8 @@ setup(
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
