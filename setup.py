@@ -21,6 +21,7 @@ def get_requirements(path):
     with open(path, 'r') as requirements_file:
         return requirements_file.read().split('\n')
 
+
 setup(
     name='django-dynamic-db-router',
     version=get_version(),
