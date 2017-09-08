@@ -3,6 +3,8 @@ from functools import wraps
 from uuid import uuid4
 
 from django.db import connections
+from django.utils import six
+
 
 THREAD_LOCAL = threading.local()
 
@@ -84,7 +86,7 @@ class in_database(object):
         self.read = read
         self.write = write
         self.created_db_config = False
-        if isinstance(database, str):
+        if isinstance(database, six.string_types):
             self.database = database
         elif isinstance(database, dict):
             # Note: this invalidates the docs above. Update them
