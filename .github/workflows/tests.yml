@@ -61,6 +61,7 @@ jobs:
           pip install -r requirements/setup.txt
           pip install -r requirements/test.txt
           pip install "${{ matrix.django }}"
+          pip install "${{ matrix.psycopg }}"
           pip freeze
       - name: Run tests
         env:
