@@ -58,8 +58,8 @@ jobs:
         run: |
           python --version
           pip install --upgrade pip wheel setuptools
-          pip install -r requirements/requirements.txt
-          pip install -r requirements/requirements-testing.txt
+          pip install -r requirements/setup.txt
+          pip install -r requirements/test.txt
           pip install "${{ matrix.django }}"
           pip freeze
       - name: Run tests
