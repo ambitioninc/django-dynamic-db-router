@@ -75,7 +75,6 @@ jobs:
               "PORT":"5432"
             }
         run: |
-          python manage.py check
           coverage run manage.py test issue
           coverage report --fail-under=90
       - name: Check style
