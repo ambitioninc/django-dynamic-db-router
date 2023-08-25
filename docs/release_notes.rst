@@ -1,6 +1,11 @@
 Release Notes
 =============
 
+v0.3.1
+------
+* Read the Docs config file v2
+* Github actions for testing
+
 v0.3.0
 ------
 

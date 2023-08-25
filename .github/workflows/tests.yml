@@ -1,0 +1,81 @@
+name: django-dynamic-db-router tests
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master,develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: [ '3.7','3.8','3.9' ]
+        django:
+          - 'Django~=3.2.0'
+          - 'Django~=4.0.0'
+          - 'Django~=4.1.0'
+          - 'Django~=4.2.0'
+        psycopg:
+          - 'psycopg2==2.9.6'
+          - 'psycopg==3.1.10'
+        exclude:
+          - python: '3.7'
+            django: 'Django~=4.0.0'
+          - python: '3.7'
+            django: 'Django~=4.1.0'
+          - python: '3.7'
+            django: 'Django~=4.2.0'
+          - psycopg: 'psycopg==3.1.10'
+            django: 'Django~=3.2.0'
+          - psycopg: 'psycopg==3.1.10'
+            django: 'Django~=4.0.0'
+          - psycopg: 'psycopg==3.1.10'
+            django: 'Django~=4.1.0'
+    services:
+      postgres:
+        image: postgres:14.5
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install requirements
+        run: |
+          python --version
+          pip install --upgrade pip wheel setuptools
+          pip install -r requirements/requirements.txt
+          pip install -r requirements/requirements-testing.txt
+          pip install "${{ matrix.django }}"
+          pip freeze
+      - name: Run tests
+        env:
+          DB_SETTINGS: >-
+            {
+              "ENGINE":"django.db.backends.postgresql",
+              "NAME":"issue",
+              "USER":"postgres",
+              "PASSWORD":"postgres",
+              "HOST":"localhost",
+              "PORT":"5432"
+            }
+        run: |
+          python manage.py check
+          coverage run manage.py test issue
+          coverage report --fail-under=90
+      - name: Check style
+        run: flake8 issue
