@@ -40,7 +40,7 @@ def configure_settings():
 
         # Check env for db override (used for github actions)
         if os.environ.get('DB_SETTINGS_TWO'):
-            db_config_two = json.loads(os.environ.get('DB_SETTING_TWO'))
+            db_config_two = json.loads(os.environ.get('DB_SETTINGS_TWO'))
 
 
         settings.configure(
