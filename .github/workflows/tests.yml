@@ -65,10 +65,19 @@ jobs:
           pip freeze
       - name: Run tests
         env:
-          DB_SETTINGS: >-
+          DB_SETTINGS_ONE: >-
             {
               "ENGINE":"django.db.backends.postgresql",
-              "NAME":"dynamic_db_router",
+              "NAME":"dynamic_db_router_one",
+              "USER":"postgres",
+              "PASSWORD":"postgres",
+              "HOST":"localhost",
+              "PORT":"5432"
+            }
+          DB_SETTINGS_TWO: >-
+            {
+              "ENGINE":"django.db.backends.postgresql",
+              "NAME":"dynamic_db_router_two",
               "USER":"postgres",
               "PASSWORD":"postgres",
               "HOST":"localhost",
