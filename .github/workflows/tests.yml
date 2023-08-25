@@ -68,14 +68,14 @@ jobs:
           DB_SETTINGS: >-
             {
               "ENGINE":"django.db.backends.postgresql",
-              "NAME":"issue",
+              "NAME":"dynamic_db_router",
               "USER":"postgres",
               "PASSWORD":"postgres",
               "HOST":"localhost",
               "PORT":"5432"
             }
         run: |
-          coverage run manage.py test issue
+          coverage run manage.py test dynamic_db_router
           coverage report --fail-under=90
       - name: Check style
         run: flake8 issue
