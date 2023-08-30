@@ -1,6 +1,10 @@
 Release Notes
 =============
 
+v0.3.1
+------
+* Read the Docs config file v2
+
 v0.3.0
 ------
 

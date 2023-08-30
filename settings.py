@@ -1,4 +1,5 @@
 import os
+import json
 
 from django.conf import settings
 
@@ -32,6 +33,15 @@ def configure_settings():
             }
         else:
             raise RuntimeError('Unsupported test DB {0}'.format(test_db))
+
+        # Check env for db override (used for github actions)
+        if os.environ.get('DB_SETTINGS_ONE'):
+            db_config_one = json.loads(os.environ.get('DB_SETTINGS_ONE'))
+
+        # Check env for db override (used for github actions)
+        if os.environ.get('DB_SETTINGS_TWO'):
+            db_config_two = json.loads(os.environ.get('DB_SETTINGS_TWO'))
+
 
         settings.configure(
             DATABASES={
