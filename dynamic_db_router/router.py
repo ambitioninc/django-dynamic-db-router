@@ -80,7 +80,8 @@ class in_database(object):
         with in_database(db_config):
             # Run queries
     """
-    def __init__(self, database, read=True, write=False):
+
+    def __init__(self, database, alias=None, read=True, write=False):
         self.read = read
         self.write = write
         self.created_db_config = False
@@ -90,7 +91,8 @@ class in_database(object):
             # Note: this invalidates the docs above. Update them
             # eventually.
             self.created_db_config = True
-            self.unique_db_id = str(uuid4())
+            # alias is may be needed in db_routers proposes, for example migtation
+            self.unique_db_id = alias or str(uuid4())
             connections.databases[self.unique_db_id] = database
             self.database = self.unique_db_id
         else:
