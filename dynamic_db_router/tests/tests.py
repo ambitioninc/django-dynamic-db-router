@@ -3,6 +3,7 @@ import sqlite3
 
 from django.db import connections
 from django.test import TestCase
+from django.utils import six
 from django_dynamic_fixture import G
 
 from dynamic_db_router import DynamicDbRouter, in_database
@@ -15,6 +16,13 @@ class TestInDataBaseContextManager(TestCase):
     def test_string_identifier(self):
         G(TestModel, name='Arnold')
         with in_database('default'):
+            count = TestModel.objects.count()
+        expected = 1
+        self.assertEqual(count, expected)
+
+    def test_unicode_identifier(self):
+        G(TestModel, name='Arnold')
+        with in_database(six.text_type('default')):
             count = TestModel.objects.count()
         expected = 1
         self.assertEqual(count, expected)
