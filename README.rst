@@ -4,7 +4,7 @@
 .. image:: https://coveralls.io/repos/ambitioninc/django-dynamic-db-router/badge.png?branch=develop
     :target: https://coveralls.io/r/ambitioninc/django-dynamic-db-router?branch=develop
 
-.. image:: https://pypip.in/v/django-dynamic-db-router/badge.png
+.. image:: https://img.shields.io/pypi/v/django-dynamic-db-router.svg
     :target: https://pypi.python.org/pypi/django-dynamic-db-router/
     :alt: Latest PyPI version
 
